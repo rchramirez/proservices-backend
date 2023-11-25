@@ -2,9 +2,9 @@
   "name": "proservices-backend",
   "version": "1.0.0",
   "description": "Trabajo practico de la UTN Desarrollo Web Avanzado",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon ./src/app.js"
   },
   "keywords": [],
   "author": "",
