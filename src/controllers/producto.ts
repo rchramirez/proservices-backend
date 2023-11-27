@@ -37,13 +37,21 @@ export const deleteProduct = async (req: Request, res: Response) => {
     
 }
 
-export const postProduct = (req: Request, res: Response) => {
+export const postProduct = async (req: Request, res: Response) => {
     const { body } = req;
     
-    res.json({
-        msg: 'post Product',
-        body
-    })
+    try {
+        await Producto.create(body);
+    
+        res.json({
+            msg: 'El producto fue agregado con exito!'
+        })
+    } catch (error) {
+        console.log(error);
+        res.json({
+            msg: 'Error al insertar el producto!'
+        })
+    }
 }
 
 export const updateProduct = (req: Request, res: Response) => {
