@@ -12,6 +12,7 @@ class Server {
         this.listen();
         this.middlewares();
         this.routes();
+        this.dbConnect();
     }
 
     listen() {
@@ -33,7 +34,17 @@ class Server {
         // Parseamos el body
         this.app.use(express.json());
     }
-    
+
+    async dbConnect() {
+        try {
+            await db.authenticate();
+            console.log('Database succesfuly');       
+        } catch (error) {
+            console.log(error);
+            console.log('Error connection in database');
+        }
+    }
+
 }
 
 export default Server;
