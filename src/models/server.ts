@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from 'express';
+import routesProducto from '../middleware/producto';
+import db from '../config/db';
 
 class Server {
     private app: Application;
@@ -8,6 +10,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || '3001';
         this.listen();
+        this.middlewares();
         this.routes();
     }
 
@@ -23,7 +26,14 @@ class Server {
                 msg: 'API Working'
             })
         })
+        this.app.use('/api/productos', routesProducto)
     }
+
+    middlewares() {
+        // Parseamos el body
+        this.app.use(express.json());
+    }
+    
 }
 
 export default Server;
