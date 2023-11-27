@@ -7,13 +7,17 @@ export const getProducts = async (req: Request, res: Response) => {
     res.json(listProducts)
 }
 
-export const getProduct = (req: Request, res: Response) => {
+export const getProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
-    
-    res.json({
-        msg: 'get Product',
-        id
-    })
+    const product = await Producto.findByPk(id);
+
+    if(product) {
+        res.json(product)
+    } else {
+        res.status(404).json({
+            msg: `No existe un producto con el id ${id}`
+        })
+    }
 }
 
 export const deleteProduct = (req: Request, res: Response) => {
