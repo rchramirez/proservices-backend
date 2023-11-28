@@ -3,13 +3,13 @@ import * as config from '../config'
 
 console.log(config.DB_HOST)
 
-const sequelize = new Sequelize(
-    config.DB_NAME,
-    config.DB_USER,
-    config.DB_PASSWORD, {
-        host: config.DB_HOST,
-        dialect: "mysql",
-        port: 16698
+const sequelize = new Sequelize({
+    username: config.DB_NAME,
+    password: config.DB_USER,
+    database: config.DB_PASSWORD, 
+    dialect: "mysql",
+    port: 48458,
+    host: config.DB_HOST
     }
 )
 
