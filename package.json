@@ -4,6 +4,7 @@
   "description": "Trabajo practico de la UTN Desarrollo Web Avanzado",
   "main": "src/index.ts",
   "scripts": {
+    "watch": "tsc -w",
     "start": "ts-node src/index.ts",
     "build": "tsc",
     "serve": "node dist/index.ts",
