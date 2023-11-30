@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import Producto from "../models/Producto";
+import Product from "../models/Product";
 
 export const getProducts = async (req: Request, res: Response) => {
-    const listProducts = await Producto.findAll()
+    const listProducts = await Product.findAll()
 
     res.json(listProducts)
 }
 
 export const getProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const product = await Producto.findByPk(id);
+    const product = await Product.findByPk(id);
 
     if (product) {
         res.json(product)
@@ -22,7 +22,7 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const product = await Producto.findByPk(id);
+    const product = await Product.findByPk(id);
 
     if (!product) {
         res.status(404).json({
@@ -41,7 +41,7 @@ export const postProduct = async (req: Request, res: Response) => {
     const { body } = req;
 
     try {
-        await Producto.create(body);
+        await Product.create(body);
 
         res.json({
             msg: 'El producto fue agregado con exito!'
@@ -58,7 +58,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     const { body } = req;
     const { id } = req.params;
 
-    const product = await Producto.findByPk(id);
+    const product = await Product.findByPk(id);
     try {
         if (product) {
             await product.update(body);
