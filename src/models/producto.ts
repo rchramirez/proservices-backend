@@ -2,6 +2,11 @@ import { DataTypes } from 'sequelize'
 import db from '../config/db'
 
 const Producto = db.define('Producto', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     name: {
         type: DataTypes.STRING
     },
@@ -12,7 +17,7 @@ const Producto = db.define('Producto', {
         type: DataTypes.DOUBLE
     },
     stock: {
-        type: DataTypes.NUMBER
+        type: DataTypes.INTEGER
     }
 }, {
     createdAt: false,
