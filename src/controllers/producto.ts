@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Producto from "../models/producto";
+import Producto from "../models/Producto";
 
 export const getProducts = async (req: Request, res: Response) => {
     const listProducts = await Producto.findAll()
@@ -11,7 +11,7 @@ export const getProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
     const product = await Producto.findByPk(id);
 
-    if(product) {
+    if (product) {
         res.json(product)
     } else {
         res.status(404).json({
@@ -24,7 +24,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
     const product = await Producto.findByPk(id);
 
-    if(!product) {
+    if (!product) {
         res.status(404).json({
             msg: `No existe un producto con el id ${id}`
         })
@@ -34,15 +34,15 @@ export const deleteProduct = async (req: Request, res: Response) => {
             msg: 'El producto fue eliminado con exito!'
         })
     }
-    
+
 }
 
 export const postProduct = async (req: Request, res: Response) => {
     const { body } = req;
-    
+
     try {
         await Producto.create(body);
-    
+
         res.json({
             msg: 'El producto fue agregado con exito!'
         })
@@ -60,14 +60,14 @@ export const updateProduct = async (req: Request, res: Response) => {
 
     const product = await Producto.findByPk(id);
     try {
-        if(product) {
+        if (product) {
             await product.update(body);
             res.json({
                 msg: 'El producto fue actualizado con exito!'
             })
         } else {
             res.status(404).json({
-                msg:`No existe un producto con el id ${id}`
+                msg: `No existe un producto con el id ${id}`
             })
         }
     } catch (error) {
