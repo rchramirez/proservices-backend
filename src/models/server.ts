@@ -1,6 +1,9 @@
 import express, { Application, Request, Response } from 'express';
-import routesProducto from '../middleware/producto';
-import db from '../config/db';
+import routesProducto from '../routes/producto';
+import routesUser from '../routes/user';
+import Producto from './Producto';
+import User from './User';
+
 
 class Server {
     private app: Application;
@@ -17,17 +20,8 @@ class Server {
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Application run in port ${this.port}`)
-        })
-    }
-
-    routes() {
-        this.app.get('/', (req: Request, res: Response) => {
-            res.json({
-                msg: 'API Working'
-            })
-        })
-        this.app.use('/api/productos', routesProducto)
+            console.log(`Application run in port ${this.port}`);
+        });
     }
 
     middlewares() {
@@ -35,10 +29,22 @@ class Server {
         this.app.use(express.json());
     }
 
+    routes() {
+        this.app.get('/', (req: Request, res: Response) => {
+            res.json({
+                msg: 'API Working'
+            })
+        });
+        this.app.use('/api/productos', routesProducto);
+        this.app.use('/api/users', routesUser);
+    }
+
     async dbConnect() {
         try {
-            await db.authenticate();
-            console.log('Database succesfuly');       
+            // This only test connection
+            //await db.authenticate();
+            await Producto.sync({ alter: true });
+            await User.sync({ alter: true });
         } catch (error) {
             console.log(error);
             console.log('Error connection in database');
