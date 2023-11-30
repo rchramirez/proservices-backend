@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import User from "../models/User";
+import jwt from 'jsonwebtoken';
 
 export const newUser = async (req: Request, res: Response) => {
     const { username, password } = req.body;
@@ -31,11 +32,29 @@ export const newUser = async (req: Request, res: Response) => {
     }
 }
 
-export const loginUser = (req: Request, res: Response) => {
-    const { body } = req;
+export const loginUser = async (req: Request, res: Response) => {
+    const { username, password } = req.body;
 
-    res.json({
-        msg: 'Login User',
-        body
-    })
+    const user: any = await User.findOne({ where: { username: username } })
+
+    if (!user) {
+        return res.status(400).json({
+            msg: `User not found with name ${username}`
+        })
+    }
+
+    const passwordValid = await bcrypt.compare(password, user.password)
+    if (!passwordValid) {
+        return res.status(400).json({
+            msg: `Password Incorrect!`
+        })
+    }
+
+    const token = jwt.sign({
+        username: username
+    }, process.env.SECRET_KEY || 'mysecretkey', {
+        expiresIn: '60000'
+    });
+
+    res.json(token);
 }
