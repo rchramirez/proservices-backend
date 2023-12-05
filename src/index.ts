@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import Server from "./models/server";
+import Server from "./server";
 //import * as dotenv from 'dotenv';
 
 // Configuramos las variables de ambiente
