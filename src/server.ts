@@ -1,8 +1,9 @@
 import express, { Application, Request, Response } from 'express';
-import routesProduct from '../routes/product';
-import routesUser from '../routes/user';
-import Product from './Product';
-import User from './User';
+import routesProduct from './routes/product';
+import routesUser from './routes/user';
+import Product from './models/Product';
+import { User } from './models/User';
+import sequelize from './config/database';
 
 
 class Server {
@@ -50,7 +51,6 @@ class Server {
             console.log('Error connection in database');
         }
     }
-
 }
 
 export default Server;
