@@ -1,13 +1,18 @@
 import { Router } from "express";
-import { ProductController } from "../controllers/ProductController";
-import validateToken from "./validate-token";
+import Product from "../controllers/ProductController";
+import checkAuth from "../middleware/checkAuth";
 
 const router = Router();
 
-router.get('/', validateToken, ProductController.getProducts);
-router.get('/:id', validateToken, ProductController.getProduct);
-router.delete('/:id', validateToken, ProductController.deleteProduct);
-router.post('/', validateToken, ProductController.postProduct);
-router.put('/:id', validateToken, ProductController.updateProduct);
+router
+    .route('/')
+    .get(checkAuth, Product.getProducts)
+    .post(checkAuth, Product.postProduct);
+
+router
+    .route('/:id')
+    .get(checkAuth, Product.getProduct)
+    .delete(checkAuth, Product.deleteProduct)
+    .put(checkAuth, Product.updateProduct);
 
 export default router; 

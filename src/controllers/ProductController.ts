@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Product from "../models/Product";
 
-export class ProductController {
+class ProductController {
 
     static async getProducts(req: Request, res: Response): Promise<void> {
         const listProducts = await Product.findAll()
@@ -79,3 +79,5 @@ export class ProductController {
         }
     }
 }
+
+export default ProductController;

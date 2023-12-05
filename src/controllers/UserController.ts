@@ -3,7 +3,7 @@ import { User } from "../models/User";
 import bcrypt from 'bcrypt';
 import generateJWT from "../helpers/generateJWT";
 
-export class UserController {
+class UserController {
 
     static async register(req: Request, res: Response) {
         const user = new User(req.body);
@@ -56,3 +56,5 @@ export class UserController {
     }
 
 }
+
+export default UserController;
