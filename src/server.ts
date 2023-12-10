@@ -1,10 +1,10 @@
-import express, { Application, Request, Response } from 'express';
-import routesProduct from './routes/product';
+import express, { Application } from 'express';
+import routesProduct from './routes/provider';
 import routesUser from './routes/user';
-import Product from './models/Product';
-import { User } from './models/User';
-import sequelize from './config/database';
+import Product from './models/Provider';
+import User from './models/User';
 
+import bodyParser from 'body-parser';
 
 class Server {
     private app: Application;
@@ -26,26 +26,19 @@ class Server {
     }
 
     middlewares() {
-        // Parseamos el body
+        this.app.use(bodyParser.json());
         this.app.use(express.json());
     }
 
-    routes() {
-        this.app.get('/', (req: Request, res: Response) => {
-            res.json({
-                msg: 'API Working'
-            })
-        });
-        this.app.use('/api/products', routesProduct);
+    routes() {        
+        this.app.use('/api/providers', routesProduct);
         this.app.use('/api/users', routesUser);
     }
 
     async dbConnect() {
         try {
-            // This only test connection
-            //await db.authenticate();
-            await Product.sync({ alter: true });
             await User.sync({ alter: true });
+            await Product.sync({ alter: true });
         } catch (error) {
             console.log(error);
             console.log('Error connection in database');
