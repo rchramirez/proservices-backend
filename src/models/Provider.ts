@@ -1,6 +1,7 @@
 import { CreationOptional , DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from 'sequelize'
 import sequelize from '../config/database'
 import User from './User';
+import Publication from './Publication';
 
 class Provider extends Model<InferAttributes<Provider>, InferCreationAttributes<Provider>> {
 
@@ -12,8 +13,6 @@ class Provider extends Model<InferAttributes<Provider>, InferCreationAttributes<
     declare coverageRadio: string;
     declare availability: string;
     declare document: string;
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
 }
 
 Provider.init({
@@ -35,12 +34,18 @@ Provider.init({
     coverageRadio: new DataTypes.STRING(45),
     availability: new DataTypes.CHAR(1),
     document: new DataTypes.STRING(13),
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     },
     {
         sequelize,
-        tableName: 'providers'
+        tableName: 'providers',
+        createdAt: false,
+        updatedAt: false
+});
+
+Provider.hasMany(Publication, {
+    sourceKey: 'id',
+    foreignKey: 'publicationId',
+    as: 'fkProviderPublicationId'
 });
 
 export default Provider;

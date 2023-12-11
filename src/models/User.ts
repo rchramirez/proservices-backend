@@ -1,6 +1,8 @@
-import { CreationOptional , DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize'
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize'
 import sequelize from '../config/database'
 import Provider from './Provider';
+import Administrator from './Administrator';
+import Consumer from './Consumer';
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 
@@ -14,10 +16,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare password: string;
     declare documentType: string;
     declare document: string;
+    declare birthDate: string;
     declare isConfirmed: boolean;
     declare photo: Buffer;
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
 }
 
 User.init({
@@ -59,23 +60,34 @@ User.init({
         allowNull: false,
         unique: true
     },
+    birthDate: DataTypes.DATEONLY,
     isConfirmed: {
         type: new DataTypes.BOOLEAN,
         defaultValue: false
     },
-    photo: DataTypes.BLOB,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    },
+    photo: DataTypes.BLOB
+},
     {
         sequelize,
-        tableName: 'users'
-});
+        tableName: 'users',
+        createdAt: false,
+        updatedAt: false
+    });
 
+User.hasOne(Administrator, {
+    sourceKey: 'id',
+    foreignKey: 'userId',
+    as: 'fkUserAdministratorId'
+});
 User.hasMany(Provider, {
     sourceKey: 'id',
     foreignKey: 'userId',
     as: 'fkUserProviderId'
+});
+User.hasOne(Consumer, {
+    sourceKey: 'id',
+    foreignKey: 'userId',
+    as: 'fkUserConsumerId'
 });
 
 export default User;
