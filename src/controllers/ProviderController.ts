@@ -40,10 +40,10 @@ class ProviderController {
     }
 
     static async postProvider(req: Request, res: Response): Promise<void> {
-        const { body } = req;
+        const provider = new Provider(req.body);
 
         try {
-            await Provider.create(body);
+            await provider.save();
 
             res.json({
                 msg: 'El provider fue agregado con exito!'
