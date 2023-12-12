@@ -42,12 +42,12 @@ Publication.init({
 
 Publication.hasMany(Task, {
     sourceKey: 'id',
-    foreignKey: 'taskId',
+    foreignKey: 'publicationId',
     as: 'fkPublicationTaskId'
 });
 Publication.hasMany(Work, {
     sourceKey: 'id',
-    foreignKey: 'workId',
+    foreignKey: 'publicationId',
     as: 'fkPublicationWorkId'
 });
 

@@ -79,7 +79,7 @@ User.hasOne(Administrator, {
     foreignKey: 'userId',
     as: 'fkUserAdministratorId'
 });
-User.hasMany(Provider, {
+User.hasOne(Provider, {
     sourceKey: 'id',
     foreignKey: 'userId',
     as: 'fkUserProviderId'

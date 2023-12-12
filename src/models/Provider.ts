@@ -44,7 +44,7 @@ Provider.init({
 
 Provider.hasMany(Publication, {
     sourceKey: 'id',
-    foreignKey: 'publicationId',
+    foreignKey: 'providerId',
     as: 'fkProviderPublicationId'
 });
 
