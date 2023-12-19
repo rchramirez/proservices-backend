@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Administrator from "../models/Administrator";
+import Administrator from "../models/Administrators";
 
 class AdministratorController {
 
