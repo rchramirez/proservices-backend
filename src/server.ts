@@ -12,7 +12,7 @@ import bodyParser from 'body-parser';
 import uuidMiddleware from './middleware/uuidMiddleware';
 
 import User from './models/User';
-import Administrator from './models/Administrator';
+import Administrator from './models/Administrators';
 import Provider from './models/Provider';
 import Consumer from './models/Consumer';
 import Service from './models/Service';
