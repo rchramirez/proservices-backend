@@ -32,7 +32,7 @@ Service.init({
 
 Service.hasMany(Publication, {
     sourceKey: 'id',
-    foreignKey: 'publicationId',
+    foreignKey: 'serviceId',
     as: 'fkServicePublicationId'
 });
 

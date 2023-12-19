@@ -6,6 +6,7 @@ const router = Router();
 
 router
     .route('/')
+    .get(User.getUsers)
     .post(User.register);
 
 router

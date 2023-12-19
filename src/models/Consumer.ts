@@ -1,6 +1,7 @@
 import { CreationOptional , DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from 'sequelize'
 import sequelize from '../config/database'
 import User from './User';
+import Work from './Work';
 
 class Consumer extends Model<InferAttributes<Consumer>, InferCreationAttributes<Consumer>> {
 
@@ -26,6 +27,12 @@ Consumer.init({
         tableName: 'consumers',
         createdAt: false,
         updatedAt: false
+});
+
+Consumer.hasMany(Work, {
+    sourceKey: 'id',
+    foreignKey: 'consumerId',
+    as: 'fkConsumerWorkId'
 });
 
 export default Consumer;

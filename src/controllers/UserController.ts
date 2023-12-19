@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 import generateJWT from "../helpers/generateJWT";
 import generateID from "../helpers/generateID";
 import EmailService from "../services/EmailService";
+import Consumer from "../models/Consumer";
+import Provider from "../models/Provider";
 
 class UserController {
     static emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -149,9 +151,31 @@ class UserController {
         }
     }
     
+    static async getUsers(req: Request, res: Response): Promise<void> {
+        const listUsers = await User.findAll({
+            limit: 100,
+            include: [
+                User.associations.providers, 
+                User.associations.consumers,
+                User.associations.administrators],
+            subQuery: false,
+        })
+
+        res.json(listUsers)
+    }
+
     static async getUser(req: Request, res: Response) {
         const { id } = req.params;
-        const user = await User.findByPk(id);
+        const user = await User.findByPk(id, {
+            include: [{
+                model: Provider,
+                as: 'providers',
+                where: {
+                    availability: true
+                }
+            }],
+            rejectOnEmpty: true
+        });
 
         if (user) {
             res.json({

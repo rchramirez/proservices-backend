@@ -2,14 +2,14 @@ import { CreationOptional , DataTypes, ForeignKey, InferAttributes, InferCreatio
 import sequelize from '../config/database'
 import User from './User';
 
-class Administrator extends Model<InferAttributes<Administrator>, InferCreationAttributes<Administrator>> {
+class Administrators extends Model<InferAttributes<Administrators>, InferCreationAttributes<Administrators>> {
 
     declare id: CreationOptional<number>;
     declare userId: ForeignKey<User['id']>;
     declare name: string;
 }
 
-Administrator.init({
+Administrators.init({
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
@@ -26,9 +26,9 @@ Administrator.init({
     },
     {
         sequelize,
-        tableName: 'administrator',
-        createdAt: false,
-        updatedAt: false
+        tableName: 'administrators',
+        timestamps: true,
+        //underscored: true
 });
 
-export default Administrator;
+export default Administrators;
