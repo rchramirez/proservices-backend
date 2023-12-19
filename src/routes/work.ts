@@ -6,6 +6,7 @@ const router = Router();
 
 router
     .route('/')
+    .get(Work.getDocumentation)
     .get(checkAuth, Work.getWorks)
     .post(checkAuth, Work.postWork);
 
